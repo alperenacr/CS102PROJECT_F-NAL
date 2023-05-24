@@ -88,7 +88,7 @@ public class SpaceGamePauseMenu extends FXGLMenu {
 
         contunieText.setStroke(Color.WHITESMOKE);
         contunieText.setStrokeWidth(2.0);
-        centerTextBind(contunieText, 400, 200);
+        centerTextBind(contunieText, 380, 200);
 
         getContentRoot().getChildren().add(contunieText);
 
@@ -111,7 +111,7 @@ public class SpaceGamePauseMenu extends FXGLMenu {
     );
     menuBox.setAlignment(Pos.TOP_CENTER);
 
-    menuBox.setTranslateX(getAppWidth() / 2.0 - 125);
+    menuBox.setTranslateX(getAppWidth() / 2.0 - 160);
     menuBox.setTranslateY(getAppHeight() / 2.0 + 125);
     
     getContentRoot().getChildren().add(menuBox);
