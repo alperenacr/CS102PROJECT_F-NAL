@@ -36,6 +36,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import main.spacegame.service.HighScoreService;
 
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -127,7 +128,7 @@ public class SpaceGameMainMenu extends FXGLMenu {
         var menuBox = new VBox(
                 2,
                 new MenuButton("New Game", () -> fireNewGame()),
-                
+               // new MenuButton("HighScore Table"), Buraya Service Oluşturulduktan Sonra High Score Table gelecek
                 new MenuButton("Exit", () -> fireExit())
         );
         menuBox.setAlignment(Pos.TOP_CENTER);

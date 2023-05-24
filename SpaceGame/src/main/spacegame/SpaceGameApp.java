@@ -30,6 +30,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.spacegame.ui.SpaceGameMainMenu;
+import main.spacegame.ui.SpaceGamePauseMenu;
 
 import java.util.Map;
 
@@ -58,8 +59,10 @@ public class SpaceGameApp extends GameApplication{
 
         settings.setSceneFactory(new SceneFactory() {
             
-            
-           
+            @Override
+           public FXGLMenu newGameMenu(){
+            return new SpaceGamePauseMenu();
+           }
 
             @Override
             public FXGLMenu newMainMenu() {
