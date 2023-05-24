@@ -134,5 +134,7 @@ public class SpaceGamePauseMenu extends FXGLMenu {
         getContentRoot().getChildren().removeAll(myıImageView2, closeMenuButton);
         
     }
+
+    // commit deneme yoksa deli olcam
     
 }
