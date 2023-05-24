@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\alprn\\Downloads\\fxgl-17.3-uber.jar"
+    ]
+}

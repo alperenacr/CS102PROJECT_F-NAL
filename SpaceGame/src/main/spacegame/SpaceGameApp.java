@@ -83,7 +83,6 @@ public class SpaceGameApp extends GameApplication{
             vars.put("isRicochet", false);
             vars.put("secondaryCharge", 0);
             vars.put("weaponType", WeaponType.GUN);
-           // vars.put("hp", PLAYER_HP);
             vars.put("lastHitTime", 0);
             vars.put("time", 0.0);
         }

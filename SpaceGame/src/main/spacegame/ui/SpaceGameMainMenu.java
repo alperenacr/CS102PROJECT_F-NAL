@@ -55,15 +55,14 @@ public class SpaceGameMainMenu extends FXGLMenu {
 
     public SpaceGameMainMenu() {
         super(MenuType.MAIN_MENU);
-        Image mainImage =getAssetLoader().loadImage(("mainmenu.jpeg"));
+        Image mainImage =getAssetLoader().loadImage(("mainmenu.png"));
       
         
 
         ImageView myıImageView = new ImageView(mainImage);
-        myıImageView.setScaleX(2.2);
-        myıImageView.setScaleY(2.2);
-        myıImageView.setTranslateX(getAppWidth()/4);
-        myıImageView.setTranslateY(getAppHeight()/4);
+       
+        myıImageView.setTranslateX(0);
+        myıImageView.setTranslateY(0);
         getContentRoot().getChildren().add(myıImageView);
         
         
