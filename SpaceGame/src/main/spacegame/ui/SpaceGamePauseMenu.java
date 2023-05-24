@@ -58,6 +58,10 @@ import static javafx.scene.input.KeyCode.*;
 
 public class SpaceGamePauseMenu extends FXGLMenu {
 
+    Image creditImage =getAssetLoader().loadImage(("credits.png"));
+    ImageView myıImageView2 = new ImageView(creditImage);
+    MenuButton closeMenuButton = new MenuButton("Close Credits",() -> closeCredits());
+   
     public SpaceGamePauseMenu(){
         super(MenuType.GAME_MENU);
 
@@ -101,52 +105,8 @@ public class SpaceGamePauseMenu extends FXGLMenu {
         var menuBox = new VBox(
             2,
             new MenuButton("New Game", () -> fireNewGame()),
-            new MenuButton("Credits",() -> new Action() {
+            new MenuButton("Credits",() -> showCredits()),
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    showCredits();
-                    throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-                }
-
-                @Override
-                public Object getValue(String key) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'getValue'");
-                }
-
-                @Override
-                public void putValue(String key, Object value) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'putValue'");
-                }
-
-                @Override
-                public void setEnabled(boolean b) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'setEnabled'");
-                }
-
-                @Override
-                public boolean isEnabled() {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
-                }
-
-                @Override
-                public void addPropertyChangeListener(PropertyChangeListener listener) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'addPropertyChangeListener'");
-                }
-
-                @Override
-                public void removePropertyChangeListener(PropertyChangeListener listener) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'removePropertyChangeListener'");
-                }
-
-                
-            }  ),
             new MenuButton("Exit", () -> fireExit())
     );
     menuBox.setAlignment(Pos.TOP_CENTER);
@@ -155,14 +115,24 @@ public class SpaceGamePauseMenu extends FXGLMenu {
     menuBox.setTranslateY(getAppHeight() / 2.0 + 125);
     
     getContentRoot().getChildren().add(menuBox);
+
+    closeMenuButton.setTranslateX(800);
+    closeMenuButton.setTranslateY(1000);
     }
 
     public void showCredits(){
-        Image creditImage =getAssetLoader().loadImage(("credits.png"));
-        ImageView myıImageView2 = new ImageView(creditImage);
+        
+        getContentRoot().getChildren().add( myıImageView2);
         myıImageView2.setTranslateX(0);
         myıImageView2.setTranslateY(0);
-        getContentRoot().getChildren().add( myıImageView2);
+
+        getContentRoot().getChildren().add( closeMenuButton);
+        
+    }
+
+    public void closeCredits() {
+        getContentRoot().getChildren().removeAll(myıImageView2, closeMenuButton);
+        
     }
     
 }
