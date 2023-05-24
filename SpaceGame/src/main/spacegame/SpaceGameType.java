@@ -7,7 +7,7 @@ public enum SpaceGameType {
     WİNGEDALİEN,AMONGUS, BOMBER, BOSS,
 
     // pick-ups
-    PICKUP_DASH,
+    PICKUP_DASH, 
 
     // misc
     BULLET, LASER_PICKUP, BOMB,
