@@ -7,24 +7,41 @@ public class DashComponent {
     Entity player;
     int dashAmount;
 
-    DashComponent(Entity player, int dashAmount){
+    DashComponent(Entity player, int dashAmount) {
         this.player = player;
         this.dashAmount = dashAmount;
     }
 
-    public void dashUp() {
-        player.translateY(dashAmount);
-    }
-    public void dashDown() {
-        player.translateY(-dashAmount);
-    }
-    public void dashRight() {
-        player.translateX(dashAmount);
-    }
-    public void dashLeft() {
-        player.translateX(-dashAmount);
+    public boolean dashUp() {
+        if (player.getY() + dashAmount < 3000) {
+            player.translateY(dashAmount);
+            return true;
+        }
+        return false;
     }
 
+    public boolean dashDown() {
+        if (player.getY() - dashAmount > 0) {
+            player.translateY(-dashAmount);
+            return true;
+        }
+        return false;
+    }
 
+    public boolean dashRight() {
+        if (player.getX() + dashAmount < 3000) {
+            player.translateX(dashAmount);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean dashLeft() {
+        if (player.getX() - dashAmount > 0) {
+            player.translateX(-dashAmount);
+            return true;
+        }
+        return false;
+    }
 
 }
