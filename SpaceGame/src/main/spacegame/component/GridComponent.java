@@ -1,5 +1,7 @@
 package main.spacegame.component;
 
-public class GridComponent {
+import com.almasb.fxgl.entity.component.Component;
+
+public class GridComponent extends Component {
     
 }
