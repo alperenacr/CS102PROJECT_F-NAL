@@ -1,5 +1,6 @@
 package main.spacegame.component;
 
+import static com.almasb.fxgl.dsl.FXGL.*;
 import com.almasb.fxgl.entity.Entity;
 
 public class DashComponent {
@@ -13,7 +14,7 @@ public class DashComponent {
     }
 
     public boolean dashUp() {
-        if (player.getY() + dashAmount < 3000) {
+        if (player.getY() - dashAmount >= 0) {
             player.translateY(dashAmount);
             return true;
         }
@@ -21,7 +22,7 @@ public class DashComponent {
     }
 
     public boolean dashDown() {
-        if (player.getY() - dashAmount > 0) {
+        if (player.getBottomY() + dashAmount >= getAppHeight()) {
             player.translateY(-dashAmount);
             return true;
         }
@@ -29,7 +30,7 @@ public class DashComponent {
     }
 
     public boolean dashRight() {
-        if (player.getX() + dashAmount < 3000) {
+        if (player.getRightX() + dashAmount <= getAppWidth()) {
             player.translateX(dashAmount);
             return true;
         }
@@ -37,7 +38,7 @@ public class DashComponent {
     }
 
     public boolean dashLeft() {
-        if (player.getX() - dashAmount > 0) {
+        if (player.getX() - dashAmount >= 0) {
             player.translateX(-dashAmount);
             return true;
         }

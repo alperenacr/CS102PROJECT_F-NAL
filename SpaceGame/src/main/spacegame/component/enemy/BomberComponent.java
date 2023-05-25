@@ -1,5 +1,7 @@
 package main.spacegame.component.enemy;
 
-public class BomberComponent {
+import com.almasb.fxgl.entity.component.Component;
+
+public class BomberComponent extends Component{
     
 }
