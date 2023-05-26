@@ -4,7 +4,7 @@ public enum SpaceGameType {
     PLAYER,
 
     // enemies
-    WİNGEDALİEN,AMONGUS, BOMBER, BOSS,
+    WİNGEDALİEN, AMONGUS, BOMBER, BOSS,
 
     // pick-ups
     PICKUP_DASH, 
