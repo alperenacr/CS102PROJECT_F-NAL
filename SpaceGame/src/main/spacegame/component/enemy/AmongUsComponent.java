@@ -35,7 +35,7 @@ public class AmongUsComponent extends Component {
                 timer.capture();
             }
             else{
-                chaosVelocityChanger(tpf);
+                //chaosVelocityChanger(tpf);
                 timer.capture();
             }
         }
@@ -58,7 +58,9 @@ public class AmongUsComponent extends Component {
     
         velocity = velocity.add(wantedVelocity).multiply(tpf);
     }
-
+/*
+ * 
+ 
     private void chaosVelocityChanger(double tpf){
         Point2D wantedVelocity2 = player.getCenter().multiply((player.getSpeed() * randomizer.nextDouble(2) - 1))
                 .subtract(amongUs.getCenter())
@@ -67,5 +69,5 @@ public class AmongUsComponent extends Component {
         
                 velocity = velocity.add(wantedVelocity2).multiply(tpf);
     }
-
+*/
 }

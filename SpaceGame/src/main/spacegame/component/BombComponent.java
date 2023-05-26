@@ -21,15 +21,15 @@ public class BombComponent extends Component {
 
     public void explode() {
 
-        getGameWorld()
-                .getEntitiesInRange(entity.getBoundingBoxComponent().range(radius, radius))
-                .stream()
-                .filter(e -> e.isType(HealthIntComponent.class))
-                .forEach(e -> FXGL.<SpaceGameApp>getAppCast().killEnemy(e));
+        //getGameWorld()
+        //        .getEntitiesInRange(entity.getBoundingBoxComponent().range(radius, radius))
+        //        .stream()
+        //        .filter(e -> e.isType(HealthIntComponent.class))
+        //        .forEach(e -> FXGL.<SpaceGameApp>getAppCast().killEnemy(e));
 
-        getGameWorld().getSingleton(SpaceGameType.GRID)
-                .getComponent(GridComponent.class)
-                .applyExplosiveForce(2500, entity.getCenter(), 200);
+        //getGameWorld().getSingleton(SpaceGameType.GRID)
+                //.getComponent(GridComponent.class)
+                //.applyExplosiveForce(2500, entity.getCenter(), 200);
 
     }
 

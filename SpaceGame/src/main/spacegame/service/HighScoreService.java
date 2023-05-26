@@ -1,5 +1,5 @@
 package main.spacegame.service;
-
+/*
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -106,3 +106,4 @@ public class HighScoreService {
     }
 
 }
+ */

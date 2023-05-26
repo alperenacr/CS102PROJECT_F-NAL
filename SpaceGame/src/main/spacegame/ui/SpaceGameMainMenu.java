@@ -36,7 +36,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import main.spacegame.service.HighScoreService;
+//import main.spacegame.service.HighScoreService;
 
 import java.io.InputStream;
 import java.nio.file.Files;
