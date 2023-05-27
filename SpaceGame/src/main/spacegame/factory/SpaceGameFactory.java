@@ -174,7 +174,7 @@ public class SpaceGameFactory implements EntityFactory {
 
 
     @Spawns("Explosion")
-    public Entity newExplosion(SpawnData data) {
+    public Entity spawnExplosion(SpawnData data) {
         play("explosion.wav");
 
         var texture = texture("Explosion.png", 80 * 16, 80).toAnimatedTexture(16, Duration.seconds(0.5));

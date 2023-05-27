@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import main.spacegame.component.PlayerComponent;
 import main.spacegame.ui.SpaceGameMainMenu;
 import main.spacegame.ui.SpaceGamePauseMenu;
 
@@ -38,6 +39,18 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
 
 public class SpaceGameApp extends GameApplication{
+
+    private Entity player;
+    private PlayerComponent playerComponent;
+
+
+    private VirtualJoystick moveJoystick;
+    private VirtualJoystick shootJoystick;
+
+    public Entity getPlayer() {
+        return player;
+    }
+
     public static void main(String[] args) {
         launch( args);
     }

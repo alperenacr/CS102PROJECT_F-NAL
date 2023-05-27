@@ -7,7 +7,7 @@ public class BomberComponent extends AmongUsComponent{
 
     SpaceGameFactory factory = new SpaceGameFactory();
 
-    BomberComponent(int moveSpeed, Entity player){
+    public BomberComponent(int moveSpeed, Entity player){
         super(moveSpeed, player);
     }
 
