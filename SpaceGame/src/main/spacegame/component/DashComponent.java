@@ -8,7 +8,7 @@ public class DashComponent {
     Entity player;
     int dashAmount;
 
-    DashComponent(Entity player, int dashAmount) {
+    public DashComponent(Entity player, int dashAmount) {
         this.player = player;
         this.dashAmount = dashAmount;
     }

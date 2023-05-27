@@ -15,7 +15,7 @@ public class BombComponent extends Component {
 
     int radius;
 
-    BombComponent(int radius) {
+    public BombComponent(int radius) {
         this.radius = radius;
     }
 

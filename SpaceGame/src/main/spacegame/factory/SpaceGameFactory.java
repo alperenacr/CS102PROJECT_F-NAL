@@ -25,6 +25,7 @@ import javafx.scene.effect.Bloom;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import main.spacegame.component.BombComponent;
 
 import java.util.stream.Collectors;
 
@@ -165,6 +166,7 @@ public class SpaceGameFactory implements EntityFactory {
                 .collidable()
                 .with(physics)
                 .with(new ExpireCleanComponent(Duration.seconds(4)))
+                .with("Bomb", new BombComponent(5))
                 .build();
 
         e.setReusable(true);
