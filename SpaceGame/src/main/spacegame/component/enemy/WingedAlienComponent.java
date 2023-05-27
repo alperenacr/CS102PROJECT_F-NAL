@@ -13,7 +13,7 @@ public class WingedAlienComponent extends Component {
     Vec2 directionVector;
     private Entity player;
 
-    WingedAlienComponent(int moveSpeed, Entity player) {
+   public WingedAlienComponent(int moveSpeed, Entity player) {
         this.moveSpeed = moveSpeed;
         this.player = player;
     }

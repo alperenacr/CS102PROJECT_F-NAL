@@ -35,8 +35,9 @@ public class PlayerComponent extends Component {
  
     public LocalTimer weaponTimer = newLocalTimer();
 
-    public PlayerComponent(int playerSpeed) 
+    public PlayerComponent(int playerSpeed, Entity player) 
     {
+        // düzeltme  yapılacak
         this.playerSpeed = playerSpeed;
     }
 

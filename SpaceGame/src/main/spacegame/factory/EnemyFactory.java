@@ -102,7 +102,7 @@ public class EnemyFactory implements EntityFactory{
                 .view(BOSS_TEXTURE.copy())
                 .with(new HealthIntComponent(ENEMY_HP))
                 .with(new CollidableComponent(true))
-                .with(new BossComponent(BOMBER_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
+                .with(new BossComponent(BOSS_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
                 .zIndex(ENEMIES_Z_INDEX)
                 .build();
 
@@ -119,7 +119,7 @@ public class EnemyFactory implements EntityFactory{
                 .view(AMONGUS_TEXTURE.copy())
                 .with(new HealthIntComponent(ENEMY_HP))
                 .with(new CollidableComponent(true))
-                .with(new AmongUsComponent(BOMBER_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
+                .with(new AmongUsComponent(AMONGUS_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
                 .zIndex(ENEMIES_Z_INDEX)
                 .build();
 
