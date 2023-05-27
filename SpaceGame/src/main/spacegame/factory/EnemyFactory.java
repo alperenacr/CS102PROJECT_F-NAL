@@ -76,7 +76,7 @@ public class EnemyFactory implements EntityFactory{
 
 
     @Spawns("Bomber")
-    public Entity spawnBomber(SpawnData data) {
+    public  Entity spawnBomber(SpawnData data) {
 
         var e = entityBuilder()
                 .type(BOMBER)
