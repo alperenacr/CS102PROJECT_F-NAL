@@ -7,8 +7,8 @@ import static main.spacegame.level.LevelFactory.level;
 
 
 public class LevelService extends EngineService {
-    private static Level levels = new Level(){
-        level()
+    private static Level levels[] = new Level[]{
+    level()
     };
 
     private Level level = null;
@@ -18,7 +18,7 @@ public class LevelService extends EngineService {
             level.end();
         }
 
-        level = FXGLMath.random(level).get();
+        level = FXGLMath.random(levels).get();
         level.start();
 
     }
