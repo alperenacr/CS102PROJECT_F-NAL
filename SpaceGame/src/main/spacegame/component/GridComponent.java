@@ -18,22 +18,33 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static  main.spacegame.SpaceGameType.BULLET;
-public class GridComponent extends Component {
-    private ArrayList <Line> lines = new ArrayList<Line>();
-    private ArrayList <ExtraLines> extraLines = new ArrayList<ExtraLines>();
-    private ArrayList <Spribg> springs = new ArrayList <Spring>();
 
-    private ExtendedPoint [][] points;
-    private ExtendedPoint [][] fixedPoints;
-    
+public class GridComponent extends Component {
+    private static final double POINT_MASS_DAMPING = 0.8;
+
+    // how fast springs return to original state
+    private static final double SPRING_STIFFNESS = 0.28;
+    private static final double SPRING_DAMPING = 0.86;
+
+    private static final Color IDLE_COLOR = Color.color(0.138, 0.138, 0.375, 0.66);
+    private static final Color EDGE_COLOR = IDLE_COLOR.brighter().brighter();
+    private static final Color BULLET_COLOR = Color.color(0.138, 0.238, 0.975, 0.76);
+
+    private Array<Line> lines = new Array<>(1000);
+    private Array<ExtraLine> extraLines = new Array<>(1000);
+
+    private List<Spring> springs = new ArrayList<>();
+    private ExtendedPoint[][] points;
+    private  ExtendedPoint[][] fixedPoints;
+
     private Canvas onScreenCanvas = new Canvas(getAppWidth(), getAppHeight());
     private Canvas offScreenCanvas = new Canvas(getAppWidth(), getAppHeight());
 
     private GridRenderThread gridRenderThread = new GridRenderThread();
 
-    private ArrayList<Entity> bullets = new ArrayList<Entity>();
+    private List<Entity> bullets = new ArrayList<>();
 
-    public GridComcponent(){
+    public GridComponent(){
         Point2D spacing = new Point2D(19.4, 20.0);
 
         int numberOfColumns = (int) (getAppWidth() / spacing.getX()) + 2;
@@ -47,10 +58,10 @@ public class GridComponent extends Component {
         double yCoord = 0;
         for(int rows = 0; rows < numberOfRows; rows++)
         {
-            for(int columns = 0; columns < numberOfColumns; column++)
+            for(int columns = 0; columns < numberOfColumns; columns++)
             {
                 points[columns][rows] = new ExtendedPoint(new Vec2(xCoord, yCoord), POINT_MASS_DAMPING, 1);
-                fixedPoints[column][row] = new PointMass(new Vec2(xCoord, yCoord), POINT_MASS_DAMPING, 0);
+                fixedPoints[columns][rows] = new ExtendedPoint(new Vec2(xCoord, yCoord), POINT_MASS_DAMPING, 0);
                 xCoord += spacing.getX();
             }
             yCoord += spacing.getY();
@@ -58,9 +69,9 @@ public class GridComponent extends Component {
         }
 
         // link the point masses with springs
-        for (int y = 0; y < numRows; y++) {
-            for (int x = 0; x < numColumns; x++) {
-                if (x == 0 || y == 0 || x == numColumns - 1 || y == numRows - 1) {
+        for (int y = 0; y < numberOfRows; y++) {
+            for (int x = 0; x < numberOfColumns; x++) {
+                if (x == 0 || y == 0 || x == numberOfColumns - 1 || y == numberOfRows - 1) {
                     springs.add(new Spring(fixedPoints[x][y], points[x][y], 0.5, 0.1));
                 } else if (x % 3 == 0 && y % 3 == 0) {
                     springs.add(new Spring(fixedPoints[x][y], points[x][y], 0.005, 0.02));
@@ -292,7 +303,7 @@ public class GridComponent extends Component {
         private float damping;
         private float inverseMass;
 
-        public PointMass(Vec2 position, double damping, double inverseMass) {
+        public ExtendedPoint(Vec2 position, double damping, double inverseMass) {
             this.position = position;
             this.damping = (float) damping;
             this.initialDamping = (float) damping;

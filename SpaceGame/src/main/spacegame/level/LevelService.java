@@ -1,14 +1,25 @@
 package main.spacegame.level;
 
+import com.almasb.fxgl.core.EngineService;
+import com.almasb.fxgl.core.math.FXGLMath;
+
+import static main.spacegame.level.LevelFactory.level;
+
+
 public class LevelService extends EngineService {
-    private static Level level = new Level(){
+    private static Level levels = new Level(){
         level()
     };
 
     private Level level = null;
 
     public void spawnLevel(){
-        //
+        if (level != null) {
+            level.end();
+        }
+
+        level = FXGLMath.random(level).get();
+        level.start();
 
     }
 
