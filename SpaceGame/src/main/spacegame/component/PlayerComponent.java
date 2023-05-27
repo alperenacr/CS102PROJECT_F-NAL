@@ -1,4 +1,4 @@
-package com.almasb.fxglgames.geowars.component;
+package main.spacegame.component;
 
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.components.ExpireCleanComponent;
@@ -8,21 +8,23 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.particle.ParticleComponent;
 import com.almasb.fxgl.particle.ParticleEmitters;
 import com.almasb.fxgl.time.LocalTimer;
-import com.almasb.fxglgames.geowars.factory.GeoWarsFactory;
-import com.almasb.fxglgames.geowars.WeaponType;
+import main.spacegame.factory.*;
+import main.spacegame.WeaponType;
+import main.spacegame.factory.SpaceGameFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import main.spacegame.WeaponType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.geto;
-import static com.almasb.fxglgames.geowars.Config.MAX_CHARGES_SECONDARY;
-import static com.almasb.fxglgames.geowars.Config.WEAPON_DELAY;
-import static com.almasb.fxglgames.geowars.GeoWarsType.GRID;
+
+import static main.spacegame.Config.WEAPON_DELAY;
+
 
 public class PlayerComponent extends Component {
     
