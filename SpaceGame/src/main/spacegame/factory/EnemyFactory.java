@@ -26,6 +26,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 import static main.spacegame.Config.*;
 import static main.spacegame.SpaceGameType.*;
+import main.spacegame.SpaceGameApp;
 
 public class EnemyFactory implements EntityFactory{
     

@@ -1,7 +1,23 @@
 package main.spacegame.component;
 
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.core.collection.Array;
+import com.almasb.fxgl.core.math.Vec2;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.logging.Logger;
+import javafx.application.Platform;
+import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static com.almasb.fxgl.dsl.FXGL.*;
+import static  main.spacegame.SpaceGameType.BULLET;
 public class GridComponent extends Component {
     private ArrayList <Line> lines = new ArrayList<Line>();
     private ArrayList <ExtraLines> extraLines = new ArrayList<ExtraLines>();
