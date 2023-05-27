@@ -16,8 +16,8 @@ public class AmongUsComponent extends Component {
     private Entity amongUs;
     private Random randomizer;
 
-    private LocalTimer timer = FXGL.newLocalTimer();
-    private Duration delay = Duration.seconds(0.15);
+    protected LocalTimer timer = FXGL.newLocalTimer();
+    protected Duration delay = Duration.seconds(0.15);
 
     AmongUsComponent(int moveSpeed, Entity player) {
         this.moveSpeed = moveSpeed;
