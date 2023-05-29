@@ -75,6 +75,12 @@ public class EnemyFactory implements EntityFactory{
         return e;
     }
 
+    public static void respawnWingedAlien(Entity entity) {
+        entity.getComponent(HealthIntComponent.class).setValue(ENEMY_HP);
+        entity.setPosition(getRandomSpawnPoint());
+
+        entity.getComponent(WingedAlienComponent.class).resume();  
+    }
 
     @Spawns("Bomber")
     public  Entity spawnBomber(SpawnData data) {
@@ -91,6 +97,13 @@ public class EnemyFactory implements EntityFactory{
 
 
         return e;
+    }
+
+    public static void respawnBomber(Entity entity) {
+        entity.getComponent(HealthIntComponent.class).setValue(ENEMY_HP);
+        entity.setPosition(getRandomSpawnPoint());
+
+        entity.getComponent(BomberComponent.class).resume();  
     }
 
     @Spawns("Boss")
@@ -110,7 +123,14 @@ public class EnemyFactory implements EntityFactory{
         return e;
     }
 
-    @Spawns("Amongus")
+    public static void respawnBoss(Entity entity) {
+        entity.getComponent(HealthIntComponent.class).setValue(ENEMY_HP);
+        entity.setPosition(getRandomSpawnPoint());
+
+        entity.getComponent(BossComponent.class).resume();  
+    }
+
+    @Spawns("AmongUs")
     public Entity spawnAmongUs(SpawnData data) {
 
         var e = entityBuilder()
@@ -125,6 +145,13 @@ public class EnemyFactory implements EntityFactory{
 
 
         return e;
+    }
+
+    public static void respawnAmongUs(Entity entity) {
+        entity.getComponent(HealthIntComponent.class).setValue(ENEMY_HP);
+        entity.setPosition(getRandomSpawnPoint());
+
+        entity.getComponent(AmongUsComponent.class).resume();  
     }
 
 }
