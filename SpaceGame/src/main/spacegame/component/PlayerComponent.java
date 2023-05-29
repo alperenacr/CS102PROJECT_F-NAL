@@ -85,6 +85,113 @@ public class PlayerComponent extends Component {
     public void down() {
         entity.translateY(speed);
     }
+    
+    public void shoot(Point2D shootPoint) 
+    {
+        Point2D position;
+        Point2D vectorToMouse;
+        
+        // Get the position of the player entity
+        position = entity.getCenter();
+        
+        // Calculate the vector from the player to the mouse click position
+        vectorToMouse = shootPoint.subtract(position);
+
+        // Call the shootDirection method with the calculated vector
+        shootDirection(vectorToMouse);
+     }
+
+    public void shootDirection(Point2D direction) 
+     {
+        Point2D position;
+        Point2D vectorToMouse;
+
+        boolean sttmnt = weaponTimer.elapsed(WEAPON_DELAY);
+        // Check if enough time has passed since the last shot
+        if (sttmnt) 
+        {
+
+            // Get the position of the player entity
+            position = entity.getCenter();
+
+            // Use the given direction as the bullet's direction
+            vectorToMouse = direction;
+
+            // Get the current weapon type
+            WeaponType type = geto("weaponType");
+
+            // Create a list to hold all bullets that will be spawned
+            List<Entity> bullets = new ArrayList<>();
+
+            // Spawn bullets based on weapon type
+            switch (type) 
+            {
+                case TRIPLE:
+
+                    // Spawn two extra bullets at an angle from the main bullet
+                    bullets.add(spawnBullet(position
+                                            .subtract(
+
+                                 new Point2D(vectorToMouse
+                                        .getY(),
+                                        -vectorToMouse.getX())
+                                        .normalize()
+                                        .multiply(15)),
+                                        vectorToMouse));
+                case DOUBLE:
+
+                    // Spawn one extra bullet at an angle from the main bullet
+                    bullets.add(spawnBullet(position.add(
+                            new Point2D(vectorToMouse
+                                        .getY(),
+                                        -vectorToMouse
+                                        .getX())
+                                        .normalize()
+                                        .multiply(15)),
+                                        vectorToMouse));
+
+                case SINGLE:
+
+                     // Spawn a single bullet in the given direction
+                    bullets.add(spawnBullet(position, vectorToMouse));
+
+                default:
+                    // Spawn a single bullet in the given direction
+                    bullets.add(spawnBullet(position, vectorToMouse));
+                    break;
+            }
+
+            // Capture the current time as the last shot time
+            weaponTimer.capture();
+
+        }
+    }
+
+    /**
+     * Spawns a bullet entity at the given position and with the given direction.
+     *
+     * position  The position to spawn the bullet at.
+     * direction The direction for the bullet to travel in.
+     * @return The spawned bullet entity.
+     */
+    public Entity spawnBullet(Point2D position, Point2D direction) 
+    {
+        var BulletData;
+        var entity;
+        
+        BulletData = new SpawnData(position
+                                   .getX(),
+                                   position
+                                   .getY())
+                                   .put("direction",
+                                    direction);
+       
+        entity = spawn("Bullet", data);
+
+        spaceGameFactory.respawnBullet(e, data);
+
+        return e;
+    }
 
     
 }
