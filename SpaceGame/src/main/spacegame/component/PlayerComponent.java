@@ -59,11 +59,14 @@ public class PlayerComponent extends Component {
 
         var direction = entity.getPosition().subtract(oldPosition);
 
-        if (!entity.getPosition().equals(oldPosition))
+        boolean sttmnt = !entity.getPosition().equals(oldPosition);
+        if (sttmnt)
         {
-            entity.rotateToVector(direction);
+            entity
+                .rotateToVector(direction);
         }
-        oldPosition = entity.getPosition();
+        oldPosition = entity
+            .getPosition();
     }
 
     public double getSpeed() {
@@ -71,22 +74,26 @@ public class PlayerComponent extends Component {
     }
 
     public void left() {
-        entity.translateX(-speed);
+        entity
+            .translateX(-speed);
     }
 
     public void right() {
-        entity.translateX(speed);
+        entity
+            .translateX(speed);
     }
 
     public void up() {
-        entity.translateY(-speed);
+        entity
+            .translateY(-speed);
     }
 
     public void down() {
-        entity.translateY(speed);
+        entity
+            .translateY(speed);
     }
     
-    public void shoot(Point2D shootPoint) 
+    public void shoot(Point2D shootPointCartesian) 
     {
         Point2D position;
         Point2D vectorToMouse;
@@ -95,13 +102,13 @@ public class PlayerComponent extends Component {
         position = entity.getCenter();
         
         // Calculate the vector from the player to the mouse click position
-        vectorToMouse = shootPoint.subtract(position);
+        vectorToMouse = shootPointCartesian.subtract(position);
 
         // Call the shootDirection method with the calculated vector
         shootDirection(vectorToMouse);
      }
 
-    public void shootDirection(Point2D direction) 
+    public void shootDirection(Point2D shootdirection) 
      {
         Point2D position;
         Point2D vectorToMouse;
@@ -115,7 +122,7 @@ public class PlayerComponent extends Component {
             position = entity.getCenter();
 
             // Use the given direction as the bullet's direction
-            vectorToMouse = direction;
+            vectorToMouse = shootdirection;
 
             // Get the current weapon type
             WeaponType type = geto("weaponType");
@@ -129,7 +136,8 @@ public class PlayerComponent extends Component {
                 case TRIPLE:
 
                     // Spawn two extra bullets at an angle from the main bullet
-                    bullets.add(spawnBullet(position
+                    bullets
+                        .add(spawnBullet(position
                                             .subtract(
 
                                  new Point2D(vectorToMouse
@@ -141,7 +149,8 @@ public class PlayerComponent extends Component {
                 case DOUBLE:
 
                     // Spawn one extra bullet at an angle from the main bullet
-                    bullets.add(spawnBullet(position.add(
+                    bullets
+                        .add(spawnBullet(position.add(
                             new Point2D(vectorToMouse
                                         .getY(),
                                         -vectorToMouse
@@ -153,11 +162,17 @@ public class PlayerComponent extends Component {
                 case SINGLE:
 
                      // Spawn a single bullet in the given direction
-                    bullets.add(spawnBullet(position, vectorToMouse));
+                    bullets
+                        .add(spawnBullet(
+                            position,
+                            vectorToMouse));
 
                 default:
                     // Spawn a single bullet in the given direction
-                    bullets.add(spawnBullet(position, vectorToMouse));
+                    bullets
+                        .add(spawnBullet(
+                            position,
+                            vectorToMouse));
                     break;
             }
 
@@ -190,7 +205,7 @@ public class PlayerComponent extends Component {
 
         spaceGameFactory.respawnBullet(e, data);
 
-        return e;
+        return entity;
     }
 
     
