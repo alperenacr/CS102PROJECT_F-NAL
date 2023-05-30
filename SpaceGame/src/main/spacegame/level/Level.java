@@ -25,21 +25,15 @@ public class Level {
 
     }
     public void end(){
-        for(int i = 0; i < 100;i++)
-        {
-            animations.get(i).stop(); // ??
-        }
+        animations.forEach(Animation::stop);
         animations.clear();
 
-        for(int i = 0; i < 100;i++ )
-        {
-            if(entities.get(i).isActive())
-            {
-                entities.get(i).removeFromWorld();
+        entities.forEach(entity -> {
+            if (entity.isActive()) {
+                entity.removeFromWorld();
             }
-
-        }
-
+        });
+        entities.clear();
     }
     public void onStart(){
 
@@ -48,9 +42,10 @@ public class Level {
 
     }
     public void onUpdate(double tpf){
-        for (int i = 0; i < 100; i++) {
+        animations.forEach(anim -> anim.onUpdate(tpf));
+        /*for (int i = 0; i < 100; i++) {
             animations.get(i).onUpdate(tpf);
-        }
+        }*/
     }
 
 }
