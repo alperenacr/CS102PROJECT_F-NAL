@@ -33,6 +33,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.almasb.fxgl.input.virtual.VirtualJoystick;
@@ -131,8 +132,11 @@ import main.spacegame.component.PlayerComponent;
 import main.spacegame.factory.EnemyFactory;
 import main.spacegame.factory.SpaceGameFactory;
 import main.spacegame.level.LevelService;
+import main.spacegame.service.HighScoreService;
 import main.spacegame.ui.MainUI;
 import main.spacegame.ui.SpaceGameMainMenu;
+
+import main.spacegame.service.HighScoreService;
 
 
 public class SpaceGameApp extends GameApplication{
@@ -143,8 +147,7 @@ public class SpaceGameApp extends GameApplication{
     boolean flag = false;
     public int dashes = PLAYER_DASH_COUNT;
 
-    private VirtualJoystick moveJoystick;
-    private VirtualJoystick shootJoystick;
+ 
 
     public Entity getPlayer() {
         return player;
@@ -167,6 +170,17 @@ public class SpaceGameApp extends GameApplication{
         settings.setProfilingEnabled(false);
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
+        settings.setProfilingEnabled(true); // ??
+        settings.setFullScreenAllowed(true);
+        settings.setFullScreenFromStart(true);
+
+        settings.setCollisionDetectionStrategy(CollisionDetectionStrategy.GRID_INDEXING);
+        settings.addEngineService(HighScoreService.class);
+
+        settings.addEngineService(LevelService.class);
+
+
+
         
 
         settings.setSceneFactory(new SceneFactory() {
@@ -184,7 +198,10 @@ public class SpaceGameApp extends GameApplication{
          
          @Override
     protected void onPreInit() {
-       // sound
+        getSettings().setGlobalSoundVolume(0.7);
+        getSettings().setGlobalMusicVolume(0.7);
+
+        loopBGM("dans eden sincap ama epilepsi garantili (100).mp3");
     }
     protected void initInput() {
         onKeyDown(KeyCode.V, () -> {
@@ -227,9 +244,7 @@ public class SpaceGameApp extends GameApplication{
                 }
             }, KeyCode.D, VirtualButton.RIGHT);
 
-            // TODO: use sticks to aim?
-            // TODO: allow virtual button + sticks
-            getInput().addAction(new UserAction("Shoot Mouse") {
+                    getInput().addAction(new UserAction("Shoot Mouse") {
                 @Override
                 protected void onAction() {
                     playerComponent.shoot(getInput().getMousePositionWorld());

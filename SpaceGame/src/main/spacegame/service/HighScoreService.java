@@ -1,5 +1,5 @@
 package main.spacegame.service;
-/*
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class HighScoreService {
+import com.almasb.fxgl.core.EngineService;
+
+public class HighScoreService  extends EngineService{
     
     public static void main(String[] args) {
     
         //testing new players before game starting.
-        HighScore appAdd = new HighScore();
+        HighScoreService appAdd = new HighScoreService();
         appAdd.addNewPlayer("Mustafa", 1924,2);
         appAdd.addNewPlayer("İbrahim", 1921,3);
         appAdd.addNewPlayer("ömer", 2023,4);
@@ -20,7 +22,7 @@ public class HighScoreService {
         appAdd.addNewPlayer("alperen", 1980,3);
     
         //testing deleting player when player wants to do.
-        HighScore appDelete = new HighScore();
+        HighScoreService appDelete = new HighScoreService();
         appDelete.deleteOldPlayer("Mustafa");
         appDelete.deleteOldPlayer("İbrahim");
         appDelete.deleteOldPlayer("ömer");
@@ -28,7 +30,7 @@ public class HighScoreService {
         appDelete.deleteOldPlayer("alperen");
     
         //testing update score when killing enemies and gathering items from environment.
-        HighScore appUpdateScore = new HighScore();
+        HighScoreService appUpdateScore = new HighScoreService();
         appUpdateScore.updatePlayerScore("Mustafa", 1924,2);
         appUpdateScore.updatePlayerScore("İbrahim", 1921,3);
         appUpdateScore.updatePlayerScore("ömer", 2023,4);
@@ -106,4 +108,4 @@ public class HighScoreService {
     }
 
 }
- */
+ 
