@@ -15,34 +15,20 @@ public class HighScoreService  extends EngineService{
     
         //testing new players before game starting.
         HighScoreService appAdd = new HighScoreService();
-        appAdd.addNewPlayer("Mustafa", 1924,2);
-        appAdd.addNewPlayer("İbrahim", 1921,3);
-        appAdd.addNewPlayer("ömer", 2023,4);
-        appAdd.addNewPlayer("yiğit", 2072,3);
-        appAdd.addNewPlayer("alperen", 1980,3);
-    
-        //testing deleting player when player wants to do.
-        HighScoreService appDelete = new HighScoreService();
-        appDelete.deleteOldPlayer("Mustafa");
-        appDelete.deleteOldPlayer("İbrahim");
-        appDelete.deleteOldPlayer("ömer");
-        appDelete.deleteOldPlayer("yiğit");
-        appDelete.deleteOldPlayer("alperen");
-    
-        //testing update score when killing enemies and gathering items from environment.
-        HighScoreService appUpdateScore = new HighScoreService();
-        appUpdateScore.updatePlayerScore("Mustafa", 1924,2);
-        appUpdateScore.updatePlayerScore("İbrahim", 1921,3);
-        appUpdateScore.updatePlayerScore("ömer", 2023,4);
-        appUpdateScore.updatePlayerScore("yiğit", 2072,3);
-        appUpdateScore.updatePlayerScore("alperen", 1980,3);
-    
+        // insert three new rows
+        appAdd.addToDatabase(3000);
+        appAdd.addToDatabase(4000);
+        appAdd.addToDatabase(5000);
+        
+        //get all datas from SQLite database
+        appAdd.getScore();
+
     }
 
     //finding database location and build according to instructions.
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:/Users/mustafacaglar/Desktop/Data/chinook.db";
+        String url = "jdbc:sqlite:/Users/mustafacaglar/Desktop/Data/player.db";
         
         Connection conn = null;
         try {
@@ -53,59 +39,36 @@ public class HighScoreService  extends EngineService{
         return conn;
     }
 
-    //update score when killing enemies and gathering items from environment.
-    public void updatePlayerScore(String PlayerName, int PlayerScore,int PlayerCurrentLevel) {
-        String sql = "UPDATE PlayerInfo SET PlayerName = ? , "
-                + "PlayerScore = ? "
-                + "WHERE PlayerCurrentLevel = ?";
 
-        try (Connection conn = this.connect();
-
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, PlayerName);
-            pstmt.setInt(2, PlayerScore);
-            pstmt.setInt(3, PlayerCurrentLevel);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    //new player adding when starting a new game.
-    public void addNewPlayer(String PlayerName, int PlayerScore,int PlayerCurrentLevel) 
+  public void getScore()
     {
-
-        String sql = "INSERT INTO PlayerInfo(PlayerName,PlayerScore,PlayerCurrentLevel) VALUES(?,?,?)";
-
-        try (Connection conn = this.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, PlayerName);
-            pstmt.setInt(2, PlayerScore);
-            pstmt.setInt(3, PlayerCurrentLevel);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    //deleting player when player wants to do.
-    public void deleteOldPlayer(String PlayerName) {
+        String linkToMethod = "SELECT score FROM player";
         
-        String sql = "DELETE FROM PlayerInfo WHERE PlayerName = ?";
+        try (Connection connection = this.connect();
+             Statement statement  = connection.createStatement();
+             ResultSet resultSet    = statement.executeQuery(linkToMethod))
+             {
+            
+           
+            while (resultSet.next()) 
+            {
+                //burada
+                System.out.println(resultSet.getInt("score"));
+            }
+        } 
+        catch (SQLException Exception) {}
+    }
+    
+    public void updatePlayerScore( int score) 
+    {
+        String sql = "INSERT INTO player(score) VALUES(?)";
 
         try (Connection conn = this.connect();
+                PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, score);
 
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, PlayerName);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+                    preparedStatement.executeUpdate();
+        } 
+        catch (SQLException Exception) {}
     }
-
 }
- 
