@@ -31,7 +31,7 @@ public class PlayerComponent extends Component {
     public Point2D oldPosition;
     public int playerSpeed=10;
     public double speed=1;
-    public int health=10;
+   
     DashComponent dash = new DashComponent(200);
 
     public LocalTimer weaponTimer = newLocalTimer();
@@ -48,10 +48,7 @@ public class PlayerComponent extends Component {
         oldPosition = entity.getPosition();
     }
     
-    public void DecreaseHealth(int buKadarAzalt)
-    {
-        health=health-buKadarAzalt;
-    }
+    
 
     @Override
     public void onUpdate(double tpf) {

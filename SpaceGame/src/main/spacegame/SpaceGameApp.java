@@ -320,23 +320,172 @@ public class SpaceGameApp extends GameApplication{
         }
 
         protected void initEnemySpawns(){
-            
+             getWorldProperties().<Integer>addListener("score", (prev, now) -> {
+                getService(HighScoreService.class).updatePlayerScore("Alperen", now , 1);
+    
+                if (now >= GAME_OVER_SCORE)
+                    gameOver();
+            });
+    
+            getWorldProperties().<Integer>addListener("lives", (prev, now) -> {
+                if (now == 0)
+                    gameOver();
+            });
+    
+            getWorldProperties().<Integer>addListener("hp", (prev, now) -> {
+                if (now > PLAYER_HP)
+                    set("hp", PLAYER_HP);
+    
+                if (now <= 0)
+                    killPlayer();
+            });
+    
+           
+             run(() -> {
+                // spawn waves regardless of pressure level
+                getService(LevelService.class).spawnLevel();
+            }, WAVE_SPAWN_INTERVAL);
+    
+           
+    
+    
+            run(() -> {
+                if (true) {
+                    var numToSpawn = Math.min(geti("multiplier") / 25 + 2, 8);
+    
+                    for (int i = 0; i < numToSpawn; i++) {
+                        spawn("WıngedAlıen");
+                    }
+                }
+            }, WINGEDALIEN_SPAWN_INTERVAL);
+    
+            run(() -> {
+                if (true) {
+                    for (int i = 0; i < 4; i++) {
+                        var e = spawn("Bomber");
+                        EnemyFactory.respawnBomber(e);
+                    }
+                }
+            }, BOMBER_SPAWN_INTERVAL);
+    
+            run(() -> {
+                spawnFadeIn(
+                        "Bomb",
+                        new SpawnData(FXGLMath.randomPoint(new Rectangle2D(0, 0, getAppWidth() - 80, getAppHeight() - 80))),
+                        Duration.seconds(1)
+                );
+            }, BOMBER_SPAWN_INTERVAL);
+
+            run(() -> {
+                spawnFadeIn(
+                        "Boss",
+                        new SpawnData(FXGLMath.randomPoint(new Rectangle2D(0, 0, getAppWidth() - 80, getAppHeight() - 80))),
+                        Duration.seconds(1)
+                );
+            }, BOSS_SPAWN_INTERVAL);
+            run(() -> {
+                spawnFadeIn(
+                        "AmongUs",
+                        new SpawnData(FXGLMath.randomPoint(new Rectangle2D(0, 0, getAppWidth() - 80, getAppHeight() - 80))),
+                        Duration.seconds(1)
+                );
+            }, AMONGUS_SPAWN_INTERVAL);
+    
+           
         }
 
         protected void initPhysics(){
+            PhysicsWorld physics = getPhysicsWorld();
 
-        }
-
-        protected void onCollisionBegin(Entity a, Entity b){
+            CollisionHandler bulletEnemy = new CollisionHandler(BULLET, AMONGUS) {
+                @Override
+                protected void onCollisionBegin(Entity bullet, Entity enemy) {
+                    bullet.removeFromWorld();
+    
+                    HealthIntComponent hp = enemy.getComponent(HealthIntComponent.class);
+                    hp.setValue(hp.getValue() - 1);
+    
+                    // TODO: duplication with shockwave
+                    if (hp.isZero()) {
+                        killEnemy(enemy);
+                    }
+                }
+            };
+    
+            physics.addCollisionHandler(bulletEnemy);
+            physics.addCollisionHandler(bulletEnemy.copyFor(BULLET, WİNGEDALİEN));
+            physics.addCollisionHandler(bulletEnemy.copyFor(BULLET, BOMBER));
+            physics.addCollisionHandler(bulletEnemy.copyFor(BULLET, BOSS));
+    
             
-        }
-        //collision handler physics.add atılacak her düşman için
+            physics.addCollisionHandler(new BombHandler());
+    
+           
+            
+    
+        
+    
+            CollisionHandler playerEnemy = new CollisionHandler(PLAYER, AMONGUS) {
+                @Override
+                protected void onCollisionBegin(Entity a, Entity b) {
+    
+                    getGameScene().getViewport().shakeTranslational(8);
+                    if (System.nanoTime() > geti("lastHitTime") + 100000000) {
+                        set("lastHitTime", (int)System.nanoTime());
+    
+                        inc("hp", COLLISION_PENALTY);
+    
+                        killEnemy(b);
+                    }
+                }
+            };
+    
+            physics.addCollisionHandler(playerEnemy);
+            physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, WİNGEDALİEN));
+           
+
+            physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, BOMBER));
+            physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, BOMB));
+    
+           
+        }  
+    
+
 
         protected void killPlayer(){
+            byType(WİNGEDALİEN,AMONGUS,BOMBER,BOSS,BULLET).forEach(Entity::removeFromWorld);
+            player.setPosition(getAppWidth() / 2, getAppHeight() / 2);
+    
 
+        inc("lives", -1);
+        set("kills", 0);
+        set("secondaryCharge", 0);
+        set("multiplier", 1);
+        set("hp", PLAYER_HP);
+        set("time", 0.0);
+        set("weaponType", WeaponType.SINGLE);
         }
 
         protected void initUI(){
+           var ui = new MainUI();
+
+           addUINode(ui, 30, 50);
+
+        var centerLine = new Line(getAppWidth() / 2.0, 0, getAppWidth() / 2.0, getAppHeight());
+        centerLine.setStroke(Color.RED);
+
+        Text goodLuck = getUIFactoryService().newText("Kill enemies to survive!", Color.GREEN, 38);
+
+        addUINode(goodLuck);
+
+        centerText(goodLuck);
+
+        animationBuilder()
+                .duration(Duration.seconds(2))
+                .autoReverse(true)
+                .repeat(2)
+                .fadeIn(goodLuck)
+                .buildAndPlay();
            
             
             
@@ -348,16 +497,84 @@ public class SpaceGameApp extends GameApplication{
 
         }
 
-        protected void killEnemy(Entity enemy){
+        
 
+        public void killEnemy(Entity enemy) {
+            SpawnData data;
+    
+            if (enemy.isType(BOMBER)) {
+                data = new SpawnData(enemy.getCenter()).put("numParticles", 10);
+            } else {
+                data = new SpawnData(enemy.getCenter()).put("numParticles", 200);
+            }
+    
+            
+    
+         
+    
+            
+    
+            inc("hp", +1);
+            inc("secondaryCharge", +1);
+    
+            addScoreKill(enemy.getCenter());
+    
+            enemy.removeFromWorld();
         }
         
-        protected void addScoreKill(Point2D enemyPosition){
-
+        private void addScoreKill(Point2D enemyPosition) {
+            inc("kills", +1);
+    
+            if (geti("kills") == 15) {
+                set("kills", 0);
+                inc("multiplier", +1);
+            }
+    
+            final int multiplier = geti("multiplier");
+            int score = 10 * multiplier;
+    
+            inc("score", score);
+    
+            Text bonusText = getUIFactoryService().newText(
+                    "" + score,
+                    Color.color(1, 1, 1, 0.8),
+                    Math.max(multiplier / 14, 12)
+            );
+            bonusText.setStroke(Color.GOLD);
+            bonusText.setCache(true);
+            bonusText.setCacheHint(CacheHint.SPEED);
+    
+            var e = entityBuilder()
+                    .at(enemyPosition)
+                    .view(bonusText)
+                    .zIndex(2000)
+                    .buildAndAttach();
+    
+            animationBuilder()
+                    .onFinished(() -> e.removeFromWorld())
+                    .interpolator(Interpolators.EXPONENTIAL.EASE_OUT())
+                    .translate(e)
+                    .from(enemyPosition)
+                    .to(enemyPosition.subtract(0, 65))
+                    .buildAndPlay();
+    
+            animationBuilder()
+                    .duration(Duration.seconds(0.35))
+                    .autoReverse(true)
+                    .repeat(2)
+                    .interpolator(Interpolators.BOUNCE.EASE_IN())
+                    .scale(e)
+                    .from(new Point2D(1, 1))
+                    .to(new Point2D(1.2, 0.85))
+                    .buildAndPlay();
         }
-
-        private void gameOver(){
-
+    
+        private void gameOver() {
+            getDialogService().showInputBox("Your score:" + geti("score") + "\nEnter your name", s -> s.matches("[a-zA-Z]*"), name -> {
+               // servicee göre
+    
+            
+            });
         }
         
 }
