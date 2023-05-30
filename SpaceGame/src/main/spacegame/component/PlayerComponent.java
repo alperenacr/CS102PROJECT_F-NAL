@@ -208,19 +208,19 @@ public class PlayerComponent extends Component {
      */
     public Entity spawnBullet(Point2D position, Point2D direction) 
     {
-        var BulletData;
-        var entity;
         
-        BulletData = new SpawnData(position
+    
+        
+        var BulletData = new SpawnData(position
                                    .getX(),
                                    position
                                    .getY())
                                    .put("direction",
                                     direction);
        
-        entity = spawn("Bullet", data);
+        var entity = spawn("Bullet", BulletData);
 
-        spaceGameFactory.respawnBullet(e, data);
+        SpaceGameFactory.respawnBullet(entity, BulletData);
 
         return entity;
     }

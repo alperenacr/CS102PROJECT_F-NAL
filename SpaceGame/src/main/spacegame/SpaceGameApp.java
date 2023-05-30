@@ -239,7 +239,7 @@ public class SpaceGameApp extends GameApplication{
 
 
         
-    }
+    
         protected void initGameVars(Map<String, Object> vars) {
             vars.put("score", 0);
             vars.put("multiplier", 1);
@@ -247,7 +247,7 @@ public class SpaceGameApp extends GameApplication{
             vars.put("lives", 3);
             vars.put("isRicochet", false);
             vars.put("secondaryCharge", 0);
-            vars.put("weaponType", WeaponType.GUN);
+            vars.put("weaponType", WeaponType.SINGLE);
             vars.put("lastHitTime", 0);
             vars.put("time", 0.0);
         }

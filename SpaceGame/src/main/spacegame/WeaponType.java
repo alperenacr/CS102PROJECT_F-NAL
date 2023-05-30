@@ -13,6 +13,6 @@ public enum WeaponType {
         if (multiplier > 200) return DOUBLE;
         if (multiplier > 100) return TRIPLE;
 
-        return GUN;
+        return SINGLE;
     }
 }
