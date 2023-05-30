@@ -48,6 +48,7 @@ import javafx.scene.CacheHint;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -250,6 +251,13 @@ public class SpaceGameApp extends GameApplication{
                     playerComponent.shoot(getInput().getMousePositionWorld());
                 }
             }, MouseButton.PRIMARY);
+            getInput().addAction(new UserAction("MouseRight") {
+                @Override
+                protected void onAction(){
+                    playerComponent.shoot(getInput().getMousePositionWorld());
+                    playerComponent.shoot(getInput().getMousePositionWorld());
+                }
+            }, MouseButton.SECONDARY);
         }
 
 
@@ -265,15 +273,54 @@ public class SpaceGameApp extends GameApplication{
             vars.put("weaponType", WeaponType.SINGLE);
             vars.put("lastHitTime", 0);
             vars.put("time", 0.0);
+            vars.put("dash",dashes);
         }
 
        
         protected void initGame(){
+            getGameWorld().addEntityFactory(new SpaceGameFactory());
+            getGameWorld().addEntityFactory(new EnemyFactory());
+            spawn("Background");
+
+            player = spawn("Player");
+            playerComponent = player.getComponent(PlayerComponent.class);
+
+            int dist = OUTSIDE_DISTANCE;
+            
+            getGameScene().getViewport().setLazy(true);
+            getGameScene().getViewport().setBounds(-dist, -dist, getAppWidth()+dist,getAppHeight() +dist);
+            getGameScene().getViewport().bindToEntity(player, getAppWidth() /2.0 - player.getWidth() / 2.0,getAppHeight() / 2.0 - player.getHeight() / 2.0 );
+
+
+
+            getWorldProperties().<Integer>addListener("score", (prev, now) -> {
+                getService(HighScoreService.class).updatePlayerScore("alperen",now , 1);
+    
+                if (now >= GAME_OVER_SCORE)
+                    gameOver();
+            });
+    
+            getWorldProperties().<Integer>addListener("lives", (prev, now) -> {
+                if (now == 0)
+                    gameOver();
+            });
+    
+            getWorldProperties().<Integer>addListener("hp", (prev, now) -> {
+                if (now > PLAYER_HP)
+                    set("hp", PLAYER_HP);
+    
+                if (now <= 0)
+                    killPlayer();
+            });
+    
+           if(IS_NO_ENEMIES){
+            initEnemySpawns();
+           }
             
         }
 
         protected void initEnemySpawns(){
-
+            
         }
 
         protected void initPhysics(){
