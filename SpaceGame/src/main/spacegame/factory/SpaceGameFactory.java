@@ -60,7 +60,7 @@ public class SpaceGameFactory implements EntityFactory {
     @Spawns("Player")
     public Entity spawnPlayer(SpawnData data) {
         
-        var texture = texture("PlayerNew.png", 80, 80);
+        var texture = texture("front.png", 80, 80);
 
         texture.setEffect(new Bloom(0.7));
 

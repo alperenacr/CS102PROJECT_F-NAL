@@ -148,7 +148,7 @@ public class PlayerViewComponent extends ChildViewComponent {
         
         var playerHealth = new Arc(0, 0, 60, 60, -100, 0);
         
-        playerHealth.setStroke(Color.GRAY.brighter());
+        playerHealth.setStroke(Color.RED);
         playerHealth.setStrokeWidth(3.0);
         playerHealth.setFill(null);
         playerHealth.lengthProperty().bind(getip("hp").multiply(-360.0).divide(PLAYER_HP));

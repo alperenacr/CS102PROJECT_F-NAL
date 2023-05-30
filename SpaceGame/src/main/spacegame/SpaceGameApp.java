@@ -397,19 +397,15 @@ public class SpaceGameApp extends GameApplication{
 
         protected void initPhysics(){
             PhysicsWorld physics = getPhysicsWorld();
-
+           
             CollisionHandler bulletEnemy = new CollisionHandler(BULLET, AMONGUS) {
                 @Override
                 protected void onCollisionBegin(Entity bullet, Entity enemy) {
                     bullet.removeFromWorld();
-    
                     HealthIntComponent hp = enemy.getComponent(HealthIntComponent.class);
-                    hp.setValue(hp.getValue() - 1);
-    
-                    // TODO: duplication with shockwave
-                    if (hp.isZero()) {
-                        killEnemy(enemy);
-                    }
+                    hp.setValue(hp.getValue() - 1000);
+                    killEnemy(enemy);
+                    
                 }
             };
     
@@ -429,7 +425,7 @@ public class SpaceGameApp extends GameApplication{
             CollisionHandler playerEnemy = new CollisionHandler(PLAYER, AMONGUS) {
                 @Override
                 protected void onCollisionBegin(Entity a, Entity b) {
-    
+                    
                     getGameScene().getViewport().shakeTranslational(8);
                     if (System.nanoTime() > geti("lastHitTime") + 100000000) {
                         set("lastHitTime", (int)System.nanoTime());

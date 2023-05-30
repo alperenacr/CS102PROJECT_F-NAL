@@ -8,9 +8,9 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Level {
     
-    protected final Array<Entity> entities = new Array<>(100);
+    protected final Array<Entity> entities = new Array<>(10000);
 
-    protected final Array<Animation<?>> animations = new Array<>(100);
+    protected final Array<Animation<?>> animations = new Array<>(10000);
 
     public void start(){
         for(int i = 0; i < 100; i++)

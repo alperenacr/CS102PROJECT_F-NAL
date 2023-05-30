@@ -24,7 +24,7 @@ public class BombHandler extends CollisionHandler {
 
         getGameScene().getViewport().shakeTranslational(20.0);
 
-      //  bomb.getComponent(BombComponent.class).explode();  bombComponent yazıldıktan sonra çalışacak
+       bomb.getComponent(BombComponent.class).explode();
 
       bullet.removeFromWorld();
       bomb.removeFromWorld();

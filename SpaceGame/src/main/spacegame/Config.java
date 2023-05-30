@@ -41,8 +41,8 @@ public final class Config {
     public static final Duration WINGEDALIEN_SPAWN_INTERVAL = seconds(1.5);
     public static final Duration BOMBER_SPAWN_INTERVAL = seconds(2.0);
     public static final Duration BOSS_SPAWN_INTERVAL = seconds(3.5);
-    public static final Duration AMONGUS_SPAWN_INTERVAL = seconds(40);
-    public static final Duration WAVE_SPAWN_INTERVAL = seconds(50);
+    public static final Duration AMONGUS_SPAWN_INTERVAL = seconds(5);
+    public static final Duration WAVE_SPAWN_INTERVAL = seconds(15);
 
    
 
