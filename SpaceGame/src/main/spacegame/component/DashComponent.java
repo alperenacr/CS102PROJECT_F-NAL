@@ -5,44 +5,31 @@ import com.almasb.fxgl.entity.Entity;
 
 public class DashComponent {
 
-    Entity player;
     int dashAmount;
 
-    public DashComponent(Entity player, int dashAmount) {
-        this.player = player;
+    public DashComponent(int dashAmount) {
         this.dashAmount = dashAmount;
     }
 
-    public boolean dashUp() {
-        if (player.getY() - dashAmount >= 0) {
-            player.translateY(dashAmount);
-            return true;
-        }
-        return false;
+    public void dashUp(Entity player) {
+        player.translateY(-dashAmount);
+        play("dash.wav");
     }
 
-    public boolean dashDown() {
-        if (player.getBottomY() + dashAmount >= getAppHeight()) {
-            player.translateY(-dashAmount);
-            return true;
-        }
-        return false;
+    public void dashDown(Entity player) {
+        player.translateY(dashAmount);
+        play("dash.wav");
     }
 
-    public boolean dashRight() {
-        if (player.getRightX() + dashAmount <= getAppWidth()) {
-            player.translateX(dashAmount);
-            return true;
-        }
-        return false;
+    public void dashRight(Entity player) {
+        player.translateX(dashAmount);
+        play("dash.wav");
     }
 
-    public boolean dashLeft() {
-        if (player.getX() - dashAmount >= 0) {
-            player.translateX(-dashAmount);
-            return true;
-        }
-        return false;
+    public void dashLeft(Entity player) {
+        player.translateX(-dashAmount);
+        play("dash.wav");
     }
+
 
 }

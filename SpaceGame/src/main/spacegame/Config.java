@@ -32,6 +32,7 @@ public final class Config {
 
     public static final int ENEMY_HP = 1;
     public static final int BOSS_HP = 10;
+    public static final int PLAYER_DASH_COUNT = 3;
 
     public static final int MAX_ENEMIES_PRESSURE = 150;
 

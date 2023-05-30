@@ -15,7 +15,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import main.spacegame.WeaponType;
+import static main.spacegame.WeaponType.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,8 @@ public class PlayerComponent extends Component {
     public int playerSpeed=10;
     public double speed=1;
     public int health=10;
- 
+    DashComponent dash = new DashComponent(200);
+
     public LocalTimer weaponTimer = newLocalTimer();
 
     public PlayerComponent(int playerSpeed, Entity player) 
@@ -73,24 +74,40 @@ public class PlayerComponent extends Component {
         return speed;
     }
 
-    public void left() {
-        entity
-            .translateX(-speed);
+    public void left(boolean flag) {
+        if(!flag){
+            entity.translateX(-speed);
+        }
+        else{
+            dash.dashLeft(entity);
+        }
     }
 
-    public void right() {
-        entity
-            .translateX(speed);
+    public void right(boolean flag) {
+        if(!flag){
+            entity.translateX(speed);
+        }
+        else{
+            dash.dashRight(entity);
+        }
     }
 
-    public void up() {
-        entity
-            .translateY(-speed);
+    public void up(boolean flag) {
+        if(!flag){
+            entity.translateY(-speed);
+        }
+        else{
+            dash.dashUp(entity);
+        }
     }
 
-    public void down() {
-        entity
-            .translateY(speed);
+    public void down(boolean flag) {
+        if(!flag){
+            entity.translateY(speed);
+        }
+        else{
+            dash.dashDown(entity);
+        }
     }
     
     public void shoot(Point2D shootPointCartesian) 
