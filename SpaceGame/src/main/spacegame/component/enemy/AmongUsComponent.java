@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class AmongUsComponent extends Component {
 
-    private Point2D velocity;
+    private Point2D velocity = new Point2D(0, 0);
     private int moveSpeed;
     private Entity player;
     private Entity amongUs;
@@ -35,7 +35,7 @@ public class AmongUsComponent extends Component {
                 timer.capture();
             }
             else{
-                //chaosVelocityChanger(tpf);
+                chaosVelocityChanger(tpf);
                 timer.capture();
             }
         }
@@ -58,16 +58,15 @@ public class AmongUsComponent extends Component {
     
         velocity = velocity.add(wantedVelocity).multiply(tpf);
     }
-/*
- * 
+
  
     private void chaosVelocityChanger(double tpf){
-        Point2D wantedVelocity2 = player.getCenter().multiply((player.getSpeed() * randomizer.nextDouble(2) - 1))
+        Point2D wantedVelocity2 = player.getCenter().multiply((5 * randomizer.nextDouble(2) - 1))
                 .subtract(amongUs.getCenter())
                 .normalize()
                 .multiply(moveSpeed);
         
                 velocity = velocity.add(wantedVelocity2).multiply(tpf);
     }
-*/
+
 }
