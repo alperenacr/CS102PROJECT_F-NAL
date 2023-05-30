@@ -134,6 +134,7 @@ import main.spacegame.factory.EnemyFactory;
 import main.spacegame.factory.SpaceGameFactory;
 import main.spacegame.level.LevelService;
 import main.spacegame.service.HighScoreService;
+import main.spacegame.service.LevelPressureService;
 import main.spacegame.ui.MainUI;
 import main.spacegame.ui.SpaceGameMainMenu;
 
@@ -144,6 +145,8 @@ public class SpaceGameApp extends GameApplication{
 
     private Entity player;
     private PlayerComponent playerComponent;
+
+    private LevelPressureService pressureService;
     
     boolean flag = false;
     public int dashes = PLAYER_DASH_COUNT;
@@ -177,6 +180,7 @@ public class SpaceGameApp extends GameApplication{
 
         settings.setCollisionDetectionStrategy(CollisionDetectionStrategy.GRID_INDEXING);
         settings.addEngineService(HighScoreService.class);
+        settings.addEngineService(LevelPressureService.class);
 
         settings.addEngineService(LevelService.class);
 
@@ -285,6 +289,8 @@ public class SpaceGameApp extends GameApplication{
 
             player = spawn("Player");
             playerComponent = player.getComponent(PlayerComponent.class);
+
+            pressureService = getService(LevelPressureService.class);
 
             int dist = OUTSIDE_DISTANCE;
             
@@ -464,6 +470,9 @@ public class SpaceGameApp extends GameApplication{
         }
 
         protected void initUI(){
+            var pressureText = getUIFactoryService().newText("", Color.WHITE, 24.0);
+        pressureText.textProperty().bind(getService(LevelPressureService.class).pressurePropProperty().asString("Pressure: %.2f"));
+
            var ui = new MainUI();
 
            addUINode(ui, 30, 50);
