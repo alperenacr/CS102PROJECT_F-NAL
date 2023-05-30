@@ -274,6 +274,7 @@ public class SpaceGameApp extends GameApplication{
             vars.put("lastHitTime", 0);
             vars.put("time", 0.0);
             vars.put("dash",dashes);
+            vars.put("hp", 6);
         }
 
        
@@ -283,7 +284,7 @@ public class SpaceGameApp extends GameApplication{
             spawn("Background");
 
             player = spawn("Player");
-            playerComponent = player.getComponent(PlayerComponent.class);
+      
 
             int dist = OUTSIDE_DISTANCE;
             
@@ -354,7 +355,7 @@ public class SpaceGameApp extends GameApplication{
                     var numToSpawn = Math.min(geti("multiplier") / 25 + 2, 8);
     
                     for (int i = 0; i < numToSpawn; i++) {
-                        spawn("WıngedAlıen");
+                        spawn("Winged Alien");
                     }
                 }
             }, WINGEDALIEN_SPAWN_INTERVAL);

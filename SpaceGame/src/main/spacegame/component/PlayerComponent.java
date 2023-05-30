@@ -16,6 +16,7 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import static main.spacegame.WeaponType.*;
+import static main.spacegame.SpaceGameType.GRID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class PlayerComponent extends Component {
 
     public LocalTimer weaponTimer = newLocalTimer();
 
-    public PlayerComponent(int playerSpeed, Entity player) 
+    public PlayerComponent(int playerSpeed) 
     {
         // düzeltme  yapılacak
         this.playerSpeed = playerSpeed;
@@ -220,6 +221,34 @@ public class PlayerComponent extends Component {
         SpaceGameFactory.respawnBullet(entity, BulletData);
 
         return entity;
+    }
+    public void playSpawnAnimation() {
+        for (int i = 0; i < 6; i++) {
+            final int j = i;
+
+            runOnce(() -> {
+                byType(GRID).get(0).getComponent(GridComponent.class)
+                        .applyExplosiveForce(1500 + j*100, new Point2D(getAppWidth() / 2.0, getAppHeight() / 2.0), j*50 + 50);
+            }, Duration.seconds(i * 0.4));
+        }
+
+        var emitter = ParticleEmitters.newExplosionEmitter(450);
+        emitter.setSize(1, 16);
+        emitter.setBlendMode(BlendMode.SRC_OVER);
+        emitter.setStartColor(Color.color(1.0, 1.0, 1.0, 0.5));
+        emitter.setEndColor(Color.BLUE);
+        emitter.setMaxEmissions(20);
+        emitter.setEmissionRate(0.5);
+
+        entityBuilder()
+                .at(entity.getCenter().subtract(8, 8))
+                .with(new ParticleComponent(emitter))
+                .with(new ExpireCleanComponent(Duration.seconds(3)))
+                .buildAndAttach();
+
+        animationBuilder()
+                .fadeIn(entity)
+                .buildAndPlay();
     }
 
     
