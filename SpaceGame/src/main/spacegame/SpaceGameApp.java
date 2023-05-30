@@ -284,7 +284,7 @@ public class SpaceGameApp extends GameApplication{
             spawn("Background");
 
             player = spawn("Player");
-      
+            playerComponent = player.getComponent(PlayerComponent.class);
 
             int dist = OUTSIDE_DISTANCE;
             

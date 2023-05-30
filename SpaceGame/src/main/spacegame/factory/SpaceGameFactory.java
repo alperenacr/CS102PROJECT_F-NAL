@@ -72,8 +72,8 @@ public class SpaceGameFactory implements EntityFactory {
                 .viewWithBBox(texture)
                 .collidable()
                 .zIndex(1000)
-                .with("Player", new PlayerComponent(PLAYER_SPEED))  // write getPlayer() method
-                .with("PlayerView", new PlayerViewComponent())
+                .with( new PlayerComponent(PLAYER_SPEED))  
+                .with( new PlayerViewComponent())
                 .with(new EffectComponent())
                 .with(new KeepInBoundsComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight())))
                 .zIndex(PLAYER_Z_INDEX)
