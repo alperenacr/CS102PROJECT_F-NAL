@@ -24,6 +24,7 @@ public class WingedAlienComponent extends Component {
     }
 
     public void onUpdate(double tpf) {
+        
         move(moveSpeed);
     }
 

@@ -6,9 +6,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
-/**
- * @author Almas Baimagambetov (almaslvl@gmail.com)
- */
 public class ColorBlock extends Rectangle {
 
     public ColorBlock(int size, Color color) {

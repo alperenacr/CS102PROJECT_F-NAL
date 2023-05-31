@@ -22,9 +22,6 @@ public class BombHandler extends CollisionHandler {
 
     protected void onCollisionBegin(Entity bullet, Entity bomb){
 
-        getGameScene().getViewport().shakeTranslational(20.0);
-
-       bomb.getComponent(BombComponent.class).explode();
 
       bullet.removeFromWorld();
       bomb.removeFromWorld();

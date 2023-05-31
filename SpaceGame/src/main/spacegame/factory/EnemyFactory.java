@@ -55,17 +55,13 @@ public class EnemyFactory implements EntityFactory{
 
     @Spawns("Winged Alien")
     public Entity spawnWingedAlien(SpawnData data) {
-//        var beepSwitch = new IntervalSwitchComponent(false, Duration.seconds(0.5));
-
-        var e = entityBuilder(data)
+          var e = entityBuilder()
                 .type(WİNGEDALİEN)
                 .at(getRandomSpawnPoint())
-//                .bbox(new HitBox(new Point2D(15, 15), BoundingShape.box(30, 30))) //???????????????????????????
-                .view(WINGEDALIEN_TEXTURE.copy())
-//                .with(beepSwitch)
+                .viewWithBBox(WINGEDALIEN_TEXTURE.copy())  //.viewWithBBox(BOSS_TEXTURE.copy())
                 .with(new HealthIntComponent(ENEMY_HP))
                 .with(new CollidableComponent(true))
-                .with(new WingedAlienComponent(WINGEDALIEN_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))   
+                .with(new BossComponent(WINGEDALIEN_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
                 .zIndex(ENEMIES_Z_INDEX)
                 .build();
 
@@ -88,10 +84,10 @@ public class EnemyFactory implements EntityFactory{
         var e = entityBuilder()
                 .type(BOMBER)
                 .at(getRandomSpawnPoint())
-                .view(BOMBER_TEXTURE.copy())
+                .viewWithBBox(BOMBER_TEXTURE.copy()) //.viewWithBBox(BOMBER_TEXTURE.copy())
                 .with(new HealthIntComponent(ENEMY_HP))
                 .with(new CollidableComponent(true))
-                .with(new BomberComponent(BOMBER_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
+                .with(new BomberComponent())
                 .zIndex(ENEMIES_Z_INDEX)
                 .build();
 
@@ -112,7 +108,7 @@ public class EnemyFactory implements EntityFactory{
         var e = entityBuilder()
                 .type(BOSS)
                 .at(getRandomSpawnPoint())
-                .view(BOSS_TEXTURE.copy())
+                .viewWithBBox(BOSS_TEXTURE.copy())  //.viewWithBBox(BOSS_TEXTURE.copy())
                 .with(new HealthIntComponent(ENEMY_HP))
                 .with(new CollidableComponent(true))
                 .with(new BossComponent(BOSS_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))
@@ -136,7 +132,7 @@ public class EnemyFactory implements EntityFactory{
         var e = entityBuilder()
                 .type(AMONGUS)
                 .at(getRandomSpawnPoint())
-                .view(AMONGUS_TEXTURE.copy())
+                .viewWithBBox(AMONGUS_TEXTURE.copy())
                 .with(new HealthIntComponent(ENEMY_HP))
                 .with(new CollidableComponent(true))
                 .with(new AmongUsComponent(AMONGUS_MOVE_SPEED, FXGL.<SpaceGameApp>getAppCast().getPlayer()))

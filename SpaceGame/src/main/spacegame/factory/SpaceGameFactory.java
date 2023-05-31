@@ -35,7 +35,7 @@ import static main.spacegame.SpaceGameType.*;
 
 public class SpaceGameFactory implements EntityFactory {
 
-    private static final Texture BOMB_TEXTURE = texture("Bomb.png", 15, 15);
+    private static final Texture BOMB_TEXTURE = texture("Bomb.png", 60, 60);
     private static final Texture BULLET_TEXTURE = texture("Bullet.png");
 
     @Spawns("Background")
@@ -88,7 +88,6 @@ public class SpaceGameFactory implements EntityFactory {
 
     @Spawns("Bullet")
     public Entity spawnBullet(SpawnData data) {
-        // bullet texture is 54x13, hence 6.5
 
         var bulletTexture = texture("Bullet.png");
         int bulletX = (int) bulletTexture.getWidth(); // bulletX is long side of bullet
@@ -165,11 +164,12 @@ public class SpaceGameFactory implements EntityFactory {
 
         var e = entityBuilder(data)
                 .type(BOMB)
-                .view(BOMB_TEXTURE)
+                .viewWithBBox(BOMB_TEXTURE.darker().darker().copy())
                 .collidable()
                 .with(physics)
                 .with(new ExpireCleanComponent(Duration.seconds(4)))
                 .with("Bomb", new BombComponent(5))
+                .zIndex(ENEMIES_Z_INDEX)
                 .build();
 
         e.setReusable(true);

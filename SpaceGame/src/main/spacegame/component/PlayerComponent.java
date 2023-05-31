@@ -46,6 +46,7 @@ public class PlayerComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
+        
         speed = tpf * playerSpeed;
 
         var dir = entity.getPosition().subtract(oldPosition);

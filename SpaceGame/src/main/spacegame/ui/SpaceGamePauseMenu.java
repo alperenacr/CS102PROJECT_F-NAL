@@ -84,7 +84,7 @@ public class SpaceGamePauseMenu extends FXGLMenu {
         centerTextBind(title, getAppWidth() / 2.0, 600);
         getContentRoot().getChildren().add(title);
 
-        var contunieText = getUIFactoryService().newText("TO CONTUNİE PLEASE PRESS ESC", Color.GOLD,45.0);
+        var contunieText = getUIFactoryService().newText("TO CONTINUE PLEASE PRESS ESC", Color.GOLD,45.0);
 
         contunieText.setStroke(Color.WHITESMOKE);
         contunieText.setStrokeWidth(2.0);

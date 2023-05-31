@@ -174,7 +174,6 @@ public class SpaceGameApp extends GameApplication{
         settings.setProfilingEnabled(false);
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
-        settings.setProfilingEnabled(true); // ??
         settings.setFullScreenAllowed(true);
         settings.setFullScreenFromStart(true);
 
@@ -206,7 +205,7 @@ public class SpaceGameApp extends GameApplication{
         getSettings().setGlobalSoundVolume(0.7);
         getSettings().setGlobalMusicVolume(0.7);
 
-        loopBGM("dans eden sincap ama epilepsi garantili (100).mp3");
+        loopBGM("dans.wav");
     }
     protected void initInput() {
         onKeyDown(KeyCode.V, () -> {
@@ -252,14 +251,16 @@ public class SpaceGameApp extends GameApplication{
                     getInput().addAction(new UserAction("Shoot Mouse") {
                 @Override
                 protected void onAction() {
+                    set("weaponType", WeaponType.SINGLE);
                     playerComponent.shoot(getInput().getMousePositionWorld());
                 }
             }, MouseButton.PRIMARY);
             getInput().addAction(new UserAction("MouseRight") {
                 @Override
                 protected void onAction(){
+                    set("weaponType", WeaponType.DOUBLE);
                     playerComponent.shoot(getInput().getMousePositionWorld());
-                    playerComponent.shoot(getInput().getMousePositionWorld());
+
                 }
             }, MouseButton.SECONDARY);
         }
@@ -300,14 +301,14 @@ public class SpaceGameApp extends GameApplication{
 
 
 
-            getWorldProperties().<Integer>addListener("score", (prev, now) -> {
-                getService(HighScoreService.class).updatePlayerScore("alperen",now , 1);
+             /*   getWorldProperties().<Integer>addListener("score", (prev, now) -> {
+                getService(HighScoreService.class).setScore(now);
     
                 if (now >= GAME_OVER_SCORE)
                     gameOver();
             });
     
-            getWorldProperties().<Integer>addListener("lives", (prev, now) -> {
+         getWorldProperties().<Integer>addListener("lives", (prev, now) -> {
                 if (now == 0)
                     gameOver();
             });
@@ -319,7 +320,7 @@ public class SpaceGameApp extends GameApplication{
                 if (now <= 0)
                     killPlayer();
             });
-    
+    */
            if(IS_NO_ENEMIES){
             initEnemySpawns();
            }
@@ -328,7 +329,7 @@ public class SpaceGameApp extends GameApplication{
 
         protected void initEnemySpawns(){
              getWorldProperties().<Integer>addListener("score", (prev, now) -> {
-                getService(HighScoreService.class).updatePlayerScore("Alperen", now , 1);
+                getService(HighScoreService.class).setScore(now);
     
                 if (now >= GAME_OVER_SCORE)
                     gameOver();
@@ -446,7 +447,7 @@ public class SpaceGameApp extends GameApplication{
             physics.addCollisionHandler(playerEnemy);
             physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, WİNGEDALİEN));
            
-
+            physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, BOSS));
             physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, BOMBER));
             physics.addCollisionHandler(playerEnemy.copyFor(PLAYER, BOMB));
     
@@ -500,7 +501,7 @@ public class SpaceGameApp extends GameApplication{
         }
 
         protected void onUpdate(double tpf){
-
+        
         }
 
         
@@ -577,9 +578,7 @@ public class SpaceGameApp extends GameApplication{
     
         private void gameOver() {
             getDialogService().showInputBox("Your score:" + geti("score") + "\nEnter your name", s -> s.matches("[a-zA-Z]*"), name -> {
-               // servicee göre
-    
-            
+                   getGameController().gotoMainMenu();
             });
         }
         

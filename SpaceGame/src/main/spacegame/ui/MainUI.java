@@ -42,7 +42,7 @@ public final class MainUI extends Parent {
         livesBar.setTranslateY(multText.getTranslateY() + 12);
 
         for (int i = 0; i < geti("lives"); i++) {
-            var t = texture("front.png", 16, 16);
+            var t = texture("front.png", 100, 100);
 
             livesBar.getChildren().add(t);
         }
