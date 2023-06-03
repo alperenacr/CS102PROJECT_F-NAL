@@ -12,6 +12,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public final class HighScoreService extends EngineService {
 
     private IntegerProperty score = new SimpleIntegerProperty();
