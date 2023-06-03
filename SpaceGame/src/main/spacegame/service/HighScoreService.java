@@ -50,8 +50,26 @@ public final class HighScoreService extends EngineService {
     /**
      * @return list of high scores sorted in descending order
      */
-    public List<HighScoreData> getHighScores() {
-        return new ArrayList<>(highScores);
+    public void getHighScores()
+    {
+        String linkToMethod = "Select * From player ORDER BY score desc";
+        
+        String nameAndScore=" ";
+        
+        try (Connection connection = this.connect();
+             Statement statement  = connection.createStatement();
+             ResultSet resultSet    = statement.executeQuery(linkToMethod))
+             {
+            
+           
+            while (resultSet.next()) 
+            {
+                System.out.println(resultSet.getString("playername")+" "+resultSet.getInt("score"));
+                nameAndScore=resultSet.getString("playername")+" "+resultSet.getInt("score")+" "+nameAndScore;
+            }
+            return nameAndScore;
+        } 
+        catch (SQLException Exception) {System.out.println("sıkıntı");}
     }
 
     public int getNumScoresToKeep() {
@@ -64,36 +82,33 @@ public final class HighScoreService extends EngineService {
         updateScores();
     }
 
-    private void updateScores() {
-        highScores = highScores.stream()
-                .sorted(Comparator.comparingInt(HighScoreData::getScore).reversed())
-                .limit(numScoresToKeep)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
+    public void updateScores( String playername,int score) 
+    {
+        String sql = "INSERT INTO player(playername,score) VALUES(?,?)";
 
-    @Override
-    public void write(Bundle bundle) {
-        bundle.put("highScores", highScores);
-    }
+        try (Connection conn = this.connect();
+                PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setString(1,playername);
+                    preparedStatement.setInt(2, score);
 
-    @Override
-    public void read(Bundle bundle) {
-        highScores = bundle.get("highScores");
+                    preparedStatement.executeUpdate();
+        } 
+        catch (SQLException Exception) {}
     }
 
     public static class HighScoreData implements Serializable {
         private static final long serialVersionUID = 1;
 
-        private final String tag;
+        private final String playername;
         private final int score;
 
-        private HighScoreData(String tag, int score) {
-            this.tag = tag;
+        private HighScoreData(String playername, int score) {
+            this.playername = playernameplayername;
             this.score = score;
         }
 
-        public String getTag() {
-            return tag;
+        public String getplayername() {
+            return playername;
         }
 
         public int getScore() {
